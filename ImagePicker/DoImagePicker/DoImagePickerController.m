@@ -295,6 +295,7 @@
     else
         cell.ivPhoto.image = [ASSETHELPER getImageAtIndex:indexPath.row type:ASSET_PHOTO_ASPECT_THUMBNAIL];
     
+    cell.ivPhoto.contentMode = UIViewContentModeScaleAspectFill;
 
 	if (_dSelected[@(indexPath.row)] == nil)
 		[cell setSelectMode:NO];
