@@ -5,15 +5,17 @@
 //  Created by Donobono on 2014. 1. 23..
 //
 
-#import <Foundation/Foundation.h>
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <Photos/Photos.h>
 
 #define ASSETHELPER [AssetHelper sharedAssetHelper]
 
 #define ASSET_PHOTO_THUMBNAIL 0
 #define ASSET_PHOTO_SCREEN_SIZE 1
 #define ASSET_PHOTO_FULL_RESOLUTION 2
+
+#import <Foundation/Foundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
+
 
 @interface AssetHelper : NSObject
 

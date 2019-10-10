@@ -106,8 +106,10 @@
 - (void)readAlbumList:(BOOL)bFirst
 {
     [ASSETHELPER getGroupList:^(NSArray *aGroups) {
-        
-        [_tvAlbumList reloadData];
+        if ([aGroups count] < 1) {
+            return ;
+        }
+        [self->_tvAlbumList reloadData];
 
         NSInteger nIndex = 0;
 #ifdef DO_SAVE_SELECTED_ALBUM
@@ -115,16 +117,16 @@
         if (nIndex < 0)
             nIndex = 0;
 #endif
-        [_tvAlbumList selectRowAtIndexPath:[NSIndexPath indexPathForRow:nIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
-        [_btSelectAlbum setTitle:[ASSETHELPER getGroupInfo:nIndex][@"name"] forState:UIControlStateNormal];
+        [self->_tvAlbumList selectRowAtIndexPath:[NSIndexPath indexPathForRow:nIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+        [self->_btSelectAlbum setTitle:[ASSETHELPER getGroupInfo:nIndex][@"name"] forState:UIControlStateNormal];
         
         [self showPhotosInGroup:nIndex];
         
         if (aGroups.count == 1)
-            _btSelectAlbum.enabled = NO;
+            self->_btSelectAlbum.enabled = NO;
         
         // calculate tableview's height
-        _tvAlbumList.frame = CGRectMake(_tvAlbumList.frame.origin.x, _tvAlbumList.frame.origin.y, _tvAlbumList.frame.size.width, MIN(aGroups.count * 50, 200));
+        self->_tvAlbumList.frame = CGRectMake(self->_tvAlbumList.frame.origin.x, _tvAlbumList.frame.origin.y, _tvAlbumList.frame.size.width, MIN(aGroups.count * 50, 200));
     }];
 }
 
@@ -290,10 +292,10 @@
 {
     DoPhotoCell *cell = (DoPhotoCell *)[_cvPhotoList dequeueReusableCellWithReuseIdentifier:@"DoPhotoCell" forIndexPath:indexPath];
 
-    if (_nColumnCount == 4)
+    // if (_nColumnCount == 4)
         cell.ivPhoto.image = [ASSETHELPER getImageAtIndex:indexPath.row type:ASSET_PHOTO_THUMBNAIL];
-    else
-        cell.ivPhoto.image = [ASSETHELPER getImageAtIndex:indexPath.row type:ASSET_PHOTO_ASPECT_THUMBNAIL];
+    // else
+    //  cell.ivPhoto.image = [ASSETHELPER getImageAtIndex:indexPath.row type:ASSET_PHOTO_THUMBNAIL];
     
     cell.ivPhoto.contentMode = UIViewContentModeScaleAspectFill;
 
@@ -562,12 +564,12 @@
 #pragma mark - save selected album
 - (void)saveSelectedGroup:(NSInteger)nIndex
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	[defaults setObject:[[ASSETHELPER getGroupAtIndex:nIndex] valueForProperty:ALAssetsGroupPropertyName] forKey:@"DO_SELECTED_ALBUM"];
-	[defaults synchronize];
-    
-    NSLog(@"[[ASSETHELPER getGroupAtIndex:nIndex] valueForProperty:ALAssetsGroupPropertyName] : %@", [[ASSETHELPER getGroupAtIndex:nIndex] valueForProperty:ALAssetsGroupPropertyName]);
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    
+//    [defaults setObject:[[ASSETHELPER getGroupAtIndex:nIndex] valueForProperty:ALAssetsGroupPropertyName] forKey:@"DO_SELECTED_ALBUM"];
+//    [defaults synchronize];
+//    
+//    NSLog(@"[[ASSETHELPER getGroupAtIndex:nIndex] valueForProperty:ALAssetsGroupPropertyName] : %@", [[ASSETHELPER getGroupAtIndex:nIndex] valueForProperty:ALAssetsGroupPropertyName]);
 }
 
 - (NSString *)loadSelectedGroup
